@@ -1,6 +1,6 @@
 package springdatajpamysql.springdatajpamysql.model;
 
-public class UserResponseBody {
+public class PlayerResponseBody {
 
 	private String firstName;
 	private String lastName;

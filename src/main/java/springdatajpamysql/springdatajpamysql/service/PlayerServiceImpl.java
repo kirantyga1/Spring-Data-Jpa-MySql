@@ -1,34 +1,31 @@
 package springdatajpamysql.springdatajpamysql.service;
 
-import java.util.Optional;
 import java.util.UUID;
-
-import javax.management.ServiceNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import springdatajpamysql.springdatajpamysql.model.UserEntity;
-import springdatajpamysql.springdatajpamysql.repository.UserRepository;
-import springdatajpamysql.springdatajpamysql.shared.UserDto;
+import springdatajpamysql.springdatajpamysql.model.PlayerEntity;
+import springdatajpamysql.springdatajpamysql.repository.PlayerRepository;
+import springdatajpamysql.springdatajpamysql.shared.PlayerDto;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class PlayerServiceImpl implements PlayerService {
 
 	@Autowired
-	UserRepository userRepository;
+	PlayerRepository userRepository;
 
 	@Override
-	public UserDto createUser(UserDto userDto) {
+	public PlayerDto createUser(PlayerDto playerDto) {
 
-		userDto.setUserId(UUID.randomUUID().toString());
+		playerDto.setUserId(UUID.randomUUID().toString());
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+		PlayerEntity userEntity = modelMapper.map(playerDto, PlayerEntity.class);
 		userRepository.save(userEntity);
-		UserDto returnedValue = modelMapper.map(userEntity, UserDto.class);
+		PlayerDto returnedValue = modelMapper.map(userEntity, PlayerDto.class);
 
 		return returnedValue;
 	}

@@ -2,7 +2,6 @@ package springdatajpamysql.springdatajpamysql.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.management.ServiceNotFoundException;
 
@@ -20,53 +19,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import springdatajpamysql.springdatajpamysql.model.UserEntity;
-import springdatajpamysql.springdatajpamysql.model.UserRequestBody;
-import springdatajpamysql.springdatajpamysql.model.UserResponseBody;
-import springdatajpamysql.springdatajpamysql.repository.UserRepository;
-import springdatajpamysql.springdatajpamysql.service.UserService;
-import springdatajpamysql.springdatajpamysql.shared.UserDto;
+import springdatajpamysql.springdatajpamysql.model.PlayerEntity;
+import springdatajpamysql.springdatajpamysql.model.PlayerRequestBody;
+import springdatajpamysql.springdatajpamysql.model.PlayerResponseBody;
+import springdatajpamysql.springdatajpamysql.repository.PlayerRepository;
+import springdatajpamysql.springdatajpamysql.service.PlayerService;
+import springdatajpamysql.springdatajpamysql.shared.PlayerDto;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/players")
+public class PlayerController {
 
 	@Autowired
-	UserRepository userRepository;
+	PlayerRepository playerRepository;
 
 	@Autowired
-	UserService userService;
+	PlayerService playerservice;
 
 	@GetMapping
-	public List<UserEntity> getAllUsers() {
-		return (List<UserEntity>) userRepository.findAll();
+	public List<PlayerEntity> getAllplayers() {
+		return (List<PlayerEntity>) playerRepository.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<UserEntity> getStudents(@PathVariable Long id) {
-		return userRepository.findById(id);
+	public Optional<PlayerEntity> getStudents(@PathVariable Long id) {
+		return playerRepository.findById(id);
 	}
 
 	@PostMapping
-	public ResponseEntity<UserResponseBody> createUser(@RequestBody UserRequestBody createUser) {
+	public ResponseEntity<PlayerResponseBody> createUser(@RequestBody PlayerRequestBody createPlayer) {
 
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		UserDto bookDto = modelMapper.map(createUser, UserDto.class);
-		UserDto createdBook = userService.createUser(bookDto);
-		UserResponseBody userResponseBody = modelMapper.map(createdBook, UserResponseBody.class);
+		PlayerDto bookDto = modelMapper.map(createPlayer, PlayerDto.class);
+		PlayerDto createdBook = playerservice.createUser(bookDto);
+		PlayerResponseBody userResponseBody = modelMapper.map(createdBook, PlayerResponseBody.class);
 		return ResponseEntity.status(HttpStatus.CREATED).body(userResponseBody);
 	}
 
 	@PutMapping("{id}")
-	public Optional<Object> updateUser(@PathVariable Long id, @RequestBody UserRequestBody updateUser) {
+	public Optional<Object> updateUser(@PathVariable Long id, @RequestBody PlayerRequestBody updatePlayer) {
 
-		return userRepository.findById(id).map(x -> {
-			x.setFirstName(updateUser.getFirstName());
-			x.setLastName(updateUser.getLastName());
-			x.setEmail(updateUser.getEmail());
+		return playerRepository.findById(id).map(x -> {
+			x.setFirstName(updatePlayer.getFirstName());
+			x.setLastName(updatePlayer.getLastName());
+			x.setEmail(updatePlayer.getEmail());
 
-			return userRepository.save(x);
+			return playerRepository.save(x);
 		});
 		/*
 		 * ModelMapper modelMapper = new ModelMapper();
@@ -76,16 +75,16 @@ public class UserController {
 		 * updateUser.setLastName(userDto.getLastName());
 		 * updateUser.setEmail(userDto.getEmail());
 		 * 
-		 * UserDto updatedUser = userService.createUser(userDto); UserResponseBody
+		 * UserDto updatedUser = playerservice.createUser(userDto); UserResponseBody
 		 * userResponseBody = modelMapper.map(updatedUser, UserResponseBody.class);
 		 * return ResponseEntity.status(HttpStatus.CREATED).body(userResponseBody);
 		 */
 	}
 
 	@DeleteMapping("/{id}")
-	public UserEntity deleteBook(@PathVariable long id) throws ServiceNotFoundException {
-		UserEntity userEntity = userRepository.findById(id).orElseThrow(ServiceNotFoundException::new);
-		userRepository.deleteById(id);
+	public PlayerEntity deleteBook(@PathVariable long id) throws ServiceNotFoundException {
+		PlayerEntity userEntity = playerRepository.findById(id).orElseThrow(ServiceNotFoundException::new);
+		playerRepository.deleteById(id);
 		return userEntity;
 	}
 

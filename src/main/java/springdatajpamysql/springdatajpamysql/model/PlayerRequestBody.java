@@ -1,16 +1,9 @@
-package springdatajpamysql.springdatajpamysql.shared;
+package springdatajpamysql.springdatajpamysql.model;
 
-import java.io.Serializable;
-
-public class UserDto implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3428133510767792902L;
+public class PlayerRequestBody {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String userId;
 
 	public String getFirstName() {
 		return firstName;
@@ -34,14 +27,6 @@ public class UserDto implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 }
