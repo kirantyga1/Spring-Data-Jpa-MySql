@@ -1,6 +1,7 @@
 package springdatajpamysql.springdatajpamysql.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,11 +25,7 @@ public class PlayerEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String lastName;
 
-	@Column(nullable = false, length = 120, unique = true)
-	private String email;
-
-	@Column(nullable = false, unique = true)
-	private String userId;
+	private Date lastUpdated;
 
 	public long getId() {
 		return id;
@@ -54,20 +51,12 @@ public class PlayerEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
-		return email;
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 }

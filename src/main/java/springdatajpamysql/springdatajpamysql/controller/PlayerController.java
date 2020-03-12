@@ -63,7 +63,7 @@ public class PlayerController {
 		return playerRepository.findById(id).map(x -> {
 			x.setFirstName(updatePlayer.getFirstName());
 			x.setLastName(updatePlayer.getLastName());
-			x.setEmail(updatePlayer.getEmail());
+			x.setLastUpdated(updatePlayer.getLastUpdated());
 
 			return playerRepository.save(x);
 		});

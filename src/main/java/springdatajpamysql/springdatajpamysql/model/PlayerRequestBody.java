@@ -1,9 +1,19 @@
 package springdatajpamysql.springdatajpamysql.model;
 
+import java.util.Date;
+
 public class PlayerRequestBody {
 	private String firstName;
 	private String lastName;
-	private String email;
+	private Date lastUpdated;
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -19,14 +29,6 @@ public class PlayerRequestBody {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }
