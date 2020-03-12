@@ -20,7 +20,6 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public PlayerDto createUser(PlayerDto playerDto) {
 
-		playerDto.setUserId(UUID.randomUUID().toString());
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		PlayerEntity userEntity = modelMapper.map(playerDto, PlayerEntity.class);

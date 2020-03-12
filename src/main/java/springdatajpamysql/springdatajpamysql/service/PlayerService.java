@@ -6,6 +6,4 @@ public interface PlayerService {
 
 	PlayerDto createUser(PlayerDto playerDto);
 
-	//UserDto updateUser(UserDto userDto, Long Id);
-
 }

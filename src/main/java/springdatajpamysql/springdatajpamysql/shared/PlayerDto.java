@@ -1,6 +1,7 @@
 package springdatajpamysql.springdatajpamysql.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class PlayerDto implements Serializable {
 	/**
@@ -9,8 +10,15 @@ public class PlayerDto implements Serializable {
 	private static final long serialVersionUID = -3428133510767792902L;
 	private String firstName;
 	private String lastName;
-	private String email;
-	private String userId;
+	private Date lastUpdated;
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -26,22 +34,6 @@ public class PlayerDto implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 }

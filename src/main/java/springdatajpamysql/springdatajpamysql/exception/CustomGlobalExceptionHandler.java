@@ -39,7 +39,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     }*/
 
-    @ExceptionHandler(BookUnSupportedFieldPatchException.class)
+    @ExceptionHandler(PlayerUnSupportedFieldPatchException.class)
     public void springUnSupportedFieldPatch(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.METHOD_NOT_ALLOWED.value());
     }

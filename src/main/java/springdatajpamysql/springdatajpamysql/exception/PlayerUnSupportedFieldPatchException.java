@@ -2,9 +2,9 @@ package springdatajpamysql.springdatajpamysql.exception;
 
 import java.util.Set;
 
-public class BookUnSupportedFieldPatchException extends RuntimeException {
+public class PlayerUnSupportedFieldPatchException extends RuntimeException {
 
-    public BookUnSupportedFieldPatchException(Set<String> keys) {
+    public PlayerUnSupportedFieldPatchException(Set<String> keys) {
         super("Field " + keys.toString() + " update is not allow.");
     }
 
