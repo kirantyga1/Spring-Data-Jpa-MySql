@@ -8,6 +8,7 @@ class SpringDataJpaMysqlApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }

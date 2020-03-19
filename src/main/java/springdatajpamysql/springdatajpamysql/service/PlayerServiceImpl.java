@@ -23,6 +23,8 @@ public class PlayerServiceImpl implements PlayerService {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		PlayerEntity userEntity = modelMapper.map(playerDto, PlayerEntity.class);
+		userEntity.setPlayerId(UUID.randomUUID().toString());
+		userEntity.setEncryptedpassword("test");
 		userRepository.save(userEntity);
 		PlayerDto returnedValue = modelMapper.map(userEntity, PlayerDto.class);
 
