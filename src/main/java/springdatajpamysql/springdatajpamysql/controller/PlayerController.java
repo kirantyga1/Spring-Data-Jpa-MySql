@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.management.ServiceNotFoundException;
+import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import springdatajpamysql.springdatajpamysql.model.PlayerEntity;
@@ -37,22 +39,27 @@ public class PlayerController {
 	PlayerService playerservice;
 
 	@GetMapping
-	public List<PlayerEntity> getAllplayers() {
+	public List<PlayerEntity> getAllplayers(@RequestParam(value = "id") Long id) {
 		return (List<PlayerEntity>) playerRepository.findAll();
 	}
 
-	@GetMapping("{id}")
-	public Optional<PlayerEntity> getStudents(@PathVariable Long id) {
-		return playerRepository.findById(id);
+	/*
+	 * @GetMapping("{id}") public Optional<PlayerEntity> getStudents(@PathVariable
+	 * Long id) { return playerRepository.findById(id); }
+	 */
+
+	@GetMapping("{firstName}")
+	public List<PlayerEntity> getStudents(@PathVariable String firstName) {
+		return playerRepository.findByFirstName(firstName);
 	}
 
 	@PostMapping
-	public ResponseEntity<PlayerResponseBody> createUser(@RequestBody PlayerRequestBody createPlayer) {
+	public ResponseEntity<PlayerResponseBody> createUser(@Valid @RequestBody PlayerRequestBody createPlayer) {
 
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		PlayerDto bookDto = modelMapper.map(createPlayer, PlayerDto.class);
-		PlayerDto createdBook = playerservice.createUser(bookDto);
+		PlayerDto createdBook = playerservice.createPlayer(bookDto);
 		PlayerResponseBody userResponseBody = modelMapper.map(createdBook, PlayerResponseBody.class);
 		return ResponseEntity.status(HttpStatus.CREATED).body(userResponseBody);
 	}
@@ -64,7 +71,6 @@ public class PlayerController {
 			x.setFirstName(updatePlayer.getFirstName());
 			x.setLastName(updatePlayer.getLastName());
 			x.setLastUpdated(updatePlayer.getLastUpdated());
-
 			return playerRepository.save(x);
 		});
 		/*
@@ -83,9 +89,11 @@ public class PlayerController {
 
 	@DeleteMapping("/{id}")
 	public PlayerEntity deleteBook(@PathVariable long id) throws ServiceNotFoundException {
-		PlayerEntity userEntity = playerRepository.findById(id).orElseThrow(ServiceNotFoundException::new);
+
+		PlayerEntity playerEntity = playerRepository.findById(id).orElseThrow(ServiceNotFoundException::new);
 		playerRepository.deleteById(id);
-		return userEntity;
+
+		return playerEntity;
 	}
 
 }

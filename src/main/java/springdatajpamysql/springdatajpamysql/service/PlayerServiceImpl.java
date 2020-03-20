@@ -1,6 +1,9 @@
 package springdatajpamysql.springdatajpamysql.service;
 
+import java.util.Optional;
 import java.util.UUID;
+
+import javax.management.ServiceNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -15,17 +18,17 @@ import springdatajpamysql.springdatajpamysql.shared.PlayerDto;
 public class PlayerServiceImpl implements PlayerService {
 
 	@Autowired
-	PlayerRepository userRepository;
+	PlayerRepository playerRepository;
 
 	@Override
-	public PlayerDto createUser(PlayerDto playerDto) {
+	public PlayerDto createPlayer(PlayerDto playerDto) {
 
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		PlayerEntity userEntity = modelMapper.map(playerDto, PlayerEntity.class);
 		userEntity.setPlayerId(UUID.randomUUID().toString());
 		userEntity.setEncryptedpassword("test");
-		userRepository.save(userEntity);
+		playerRepository.save(userEntity);
 		PlayerDto returnedValue = modelMapper.map(userEntity, PlayerDto.class);
 
 		return returnedValue;

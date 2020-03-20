@@ -4,6 +4,6 @@ import springdatajpamysql.springdatajpamysql.shared.PlayerDto;
 
 public interface PlayerService {
 
-	PlayerDto createUser(PlayerDto playerDto);
+	PlayerDto createPlayer(PlayerDto playerDto);
 
 }

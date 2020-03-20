@@ -20,13 +20,10 @@ public class PlayerEntity implements Serializable {
 	@GeneratedValue
 	private long id;
 
-	@Column(nullable = false, length = 50)
 	private String firstName;
 
-	@Column(nullable = false, length = 50)
 	private String lastName;
 
-	@Column(nullable = false, length = 50)
 	private String playerId;
 
 	private String encryptedpassword;
