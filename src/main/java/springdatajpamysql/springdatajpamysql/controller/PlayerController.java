@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.management.ServiceNotFoundException;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import springdatajpamysql.springdatajpamysql.exception.PlayerNotFoundException;
 import springdatajpamysql.springdatajpamysql.model.PlayerEntity;
 import springdatajpamysql.springdatajpamysql.model.PlayerRequestBody;
 import springdatajpamysql.springdatajpamysql.model.PlayerResponseBody;
@@ -43,15 +46,17 @@ public class PlayerController {
 		return (List<PlayerEntity>) playerRepository.findAll();
 	}
 
-	/*
-	 * @GetMapping("{id}") public Optional<PlayerEntity> getStudents(@PathVariable
-	 * Long id) { return playerRepository.findById(id); }
-	 */
-
-	@GetMapping("{firstName}")
-	public List<PlayerEntity> getStudents(@PathVariable String firstName) {
-		return playerRepository.findByFirstName(firstName);
+	@GetMapping("{id}")
+	public Optional<PlayerEntity> getStudents(@PathVariable Long id) {
+		Optional<PlayerEntity> playerEntity = playerRepository.findById(id);
+		return playerEntity;
 	}
+
+	/*
+	 * @GetMapping("{firstName}") public List<PlayerEntity>
+	 * getStudents(@PathVariable String firstName) { return
+	 * playerRepository.findByFirstName(firstName); }
+	 */
 
 	@PostMapping
 	public ResponseEntity<PlayerResponseBody> createUser(@Valid @RequestBody PlayerRequestBody createPlayer) {
@@ -85,6 +90,16 @@ public class PlayerController {
 		 * userResponseBody = modelMapper.map(updatedUser, UserResponseBody.class);
 		 * return ResponseEntity.status(HttpStatus.CREATED).body(userResponseBody);
 		 */
+	}
+
+	@PatchMapping("{id}")
+	public Optional<Object> updateUserSpecificColumn(@PathVariable Long id,
+			@RequestBody PlayerRequestBody updatePlayer) {
+
+		return playerRepository.findById(id).map(x -> {
+			x.setFirstName(updatePlayer.getFirstName());
+			return playerRepository.save(x);
+		});
 	}
 
 	@DeleteMapping("/{id}")
