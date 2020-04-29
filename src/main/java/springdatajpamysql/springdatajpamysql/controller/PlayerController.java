@@ -42,7 +42,7 @@ public class PlayerController {
 	PlayerService playerservice;
 
 	@GetMapping
-	public List<PlayerEntity> getAllplayers(@RequestParam(value = "id") Long id) {
+	public List<PlayerEntity> getAllplayers() {
 		return (List<PlayerEntity>) playerRepository.findAll();
 	}
 

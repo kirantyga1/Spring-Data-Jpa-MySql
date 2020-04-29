@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class PlayerDto implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3428133510767792902L;
 	private String firstName;
 	private String lastName;
